@@ -19,12 +19,24 @@ void setLabel(string texto){
 
    }
    
- void drawArrowUP(string name, int candle){
+ void drawArrow(string name="high or low", int candle=0){
   datetime x = Time[candle];
-  double y = iHigh(Symbol(),0,candle) + 100*Point;
-  ObjectDelete(0,name);
+  int symbolArrow;
+  double y;
+  
+  if(name=="high"){
+   name = "arrowUP-"+IntegerToString(candle);
+   symbolArrow = SYMBOL_ARROWUP; 
+   y = iHigh(Symbol(),0,candle) + 2*Point;
+   }
+  else{
+   symbolArrow = SYMBOL_ARROWDOWN; 
+   name = "arrowDOWN-"+IntegerToString(candle);
+   y = iLow(Symbol(),0,candle) - 2*Point;
+   }
+   ObjectDelete(0,name);
    ObjectCreate(0,name, OBJ_ARROW, 0, x, y );
-   ObjectSet(name,OBJPROP_ARROWCODE,SYMBOL_ARROWUP);
+   ObjectSet(name,OBJPROP_ARROWCODE,symbolArrow);
    ObjectSet(name,OBJPROP_STYLE, STYLE_DASHDOT);
    ObjectSet(name,OBJPROP_COLOR,clrWhite);
    ObjectSet(name,OBJPROP_WIDTH,2);
@@ -33,4 +45,26 @@ void setLabel(string texto){
  
    }
    
+int setSun(string mode="high or low"){
+   int a = 0;
+   int candle_index = -1;
+   int iHighestCandle = -1;
+   
+   if(mode=="high")
+      candle_index = iHighest(Symbol(),0,MODE_HIGH,62,a);
+   else
+      candle_index = iLowest(Symbol(),0,MODE_LOW,62,a);
+      
+   while(a!=candle_index && a<500){
+      a=candle_index;
+      
+      if(mode=="high")
+      candle_index = iHighest(Symbol(),0,MODE_HIGH,62,a);
+   else
+      candle_index = iLowest(Symbol(),0,MODE_LOW,62,a);
+      
+      }
+   
+   return candle_index;
+   }
    
