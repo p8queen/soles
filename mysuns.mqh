@@ -45,23 +45,23 @@ void setLabel(string texto){
  
    }
    
-int setSun(string mode="high or low"){
-   int a = 0;
+int setSun(string mode="high or low",int depth=60, int candleStart=0){
+   
    int candle_index = -1;
-   int iHighestCandle = -1;
+   //int iHighestCandle = -1;
    
    if(mode=="high")
-      candle_index = iHighest(Symbol(),0,MODE_HIGH,62,a);
+      candle_index = iHighest(Symbol(),0,MODE_HIGH,depth,candleStart);
    else
-      candle_index = iLowest(Symbol(),0,MODE_LOW,62,a);
+      candle_index = iLowest(Symbol(),0,MODE_LOW,depth,candleStart);
       
-   while(a!=candle_index && a<500){
-      a=candle_index;
+   while(candleStart!=candle_index){
+      candleStart=candle_index;
       
       if(mode=="high")
-      candle_index = iHighest(Symbol(),0,MODE_HIGH,62,a);
+      candle_index = iHighest(Symbol(),0,MODE_HIGH,depth,candleStart);
    else
-      candle_index = iLowest(Symbol(),0,MODE_LOW,62,a);
+      candle_index = iLowest(Symbol(),0,MODE_LOW,depth,candleStart);
       
       }
    

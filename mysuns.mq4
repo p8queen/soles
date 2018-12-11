@@ -16,13 +16,22 @@
 int OnInit()
   {
 //---
-   int candle;
+   int candleLow, candleHigh;
    setLabel("Nuevo Texto \n nueva linea");
-   candle = setSun("low"); //setSun("low",0); 0=from candle
-   drawArrow("low",candle);
-   candle = setSun("high");
-   drawArrow("high",candle);
-      
+   candleLow = setSun("low",60,0); //setSun("low",0); 0=from candle
+   drawArrow("low",candleLow);
+   candleHigh = setSun("high",60,0);
+   drawArrow("high",candleHigh);
+   
+   for(int z=0;z<200;z++){
+      candleHigh = setSun("high",60,candleHigh+1);
+      drawArrow("high",candleHigh);   
+      }
+    
+    for(int z=0;z<200;z++){
+      candleLow = setSun("low",60,candleLow+1);
+      drawArrow("low",candleLow);   
+      }
 //---
    return(INIT_SUCCEEDED);
   }
