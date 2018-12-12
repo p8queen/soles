@@ -8,30 +8,20 @@
 #property version   "1.00"
 #property strict
 
-#include "mysuns.mqh"
-
 //+------------------------------------------------------------------+
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+
 int OnInit()
   {
 //---
-   int candleLow, candleHigh;
-   setLabel("Nuevo Texto \n nueva linea");
-   candleLow = setSun("low",60,0); //setSun("low",0); 0=from candle
-   drawArrow("low",candleLow);
-   candleHigh = setSun("high",60,0);
-   drawArrow("high",candleHigh);
-   
+   double val, rsi;
    for(int z=0;z<200;z++){
-      candleHigh = setSun("high",60,candleHigh+1);
-      drawArrow("high",candleHigh);   
+      val=iCustom(Symbol(),0,"mysuns",0,z);
+      rsi=iRSI(Symbol(),0,14,PRICE_CLOSE,z);
+      if(val>0) Print("val: ",val," z: ",z, ", RSI: ", NormalizeDouble(rsi,2));
       }
-    
-    for(int z=0;z<200;z++){
-      candleLow = setSun("low",60,candleLow+1);
-      drawArrow("low",candleLow);   
-      }
+      
+
 //---
    return(INIT_SUCCEEDED);
   }
